@@ -19,7 +19,6 @@ import java.util.List;
 @DiscriminatorColumn
 public class BankAccount {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private Date createAt;
     private double balance;
