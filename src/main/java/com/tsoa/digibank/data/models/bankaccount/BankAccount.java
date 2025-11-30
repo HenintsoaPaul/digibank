@@ -1,6 +1,8 @@
-package com.tsoa.digibank.data.models;
+package com.tsoa.digibank.data.models.bankaccount;
 
 import com.tsoa.digibank.data.enums.AccountStatus;
+import com.tsoa.digibank.data.models.AccountOperation;
+import com.tsoa.digibank.data.models.Customer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +16,8 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn
 public class BankAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
