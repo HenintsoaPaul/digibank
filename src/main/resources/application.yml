@@ -1,4 +1,15 @@
 spring:
   application:
-    name:
-      digibank
+    name: digibank
+
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER_NAME}
+    password: ${DATABASE_USER_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  frontend:
+    url: ${FRONTEND_BASE_URL}
+
+server:
+  port: ${SERVER_PORT}
