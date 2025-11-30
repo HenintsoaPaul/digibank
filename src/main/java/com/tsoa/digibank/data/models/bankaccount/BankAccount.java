@@ -20,8 +20,8 @@ import java.util.List;
 public class BankAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Date createdAt;
+    private String id;
+    private Date operationDate;
     private double balance;
     private AccountStatus status;
 
