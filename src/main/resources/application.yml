@@ -1,6 +1,8 @@
 spring:
   application:
     name: digibank
+  config:
+    import: classpath:env.properties
 
   datasource:
     url: ${DATABASE_URL}
@@ -8,6 +10,7 @@ spring:
     password: ${DATABASE_USER_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
+app:
   frontend:
     url: ${FRONTEND_BASE_URL}
 
