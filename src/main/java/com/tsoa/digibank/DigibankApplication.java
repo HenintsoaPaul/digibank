@@ -30,7 +30,7 @@ public class DigibankApplication {
         return customer;
     }
 
-    @Bean
+//    @Bean
     CommandLineRunner start(CustomerRepository customerRepository,
                             AccountOperationRepository accountOperationRepository,
                             BankAccountRepository bankAccountRepository) {
@@ -42,9 +42,9 @@ public class DigibankApplication {
                     }
             );
 
-            double rand = Math.random();
-
             customerRepository.findAll().forEach(customer -> {
+                double rand = Math.random();
+
                 CurrentAccount currentAccount = new CurrentAccount();
                 currentAccount.setId(UUID.randomUUID().toString());
                 currentAccount.setBalance(rand * 90000);
@@ -65,7 +65,9 @@ public class DigibankApplication {
             });
 
             bankAccountRepository.findAll().forEach(bankAccount -> {
-                for (int i = 0; i < 5; i++) {
+                double rand = Math.random();
+
+                for (int i = 0; i < 2; i++) {
                     AccountOperation accountOperation = new AccountOperation();
                     accountOperation.setOperationDate(new java.util.Date());
                     accountOperation.setAmount(rand * 12000);
