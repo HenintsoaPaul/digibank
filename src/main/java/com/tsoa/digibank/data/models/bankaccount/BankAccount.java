@@ -21,7 +21,7 @@ public class BankAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
-    private Date operationDate;
+    private Date createAt;
     private double balance;
     private AccountStatus status;
 

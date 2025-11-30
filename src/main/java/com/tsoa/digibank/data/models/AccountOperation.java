@@ -17,7 +17,7 @@ public class AccountOperation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date createdAt;
+    private Date operationDate;
     private String description;
     private double amount;
     private OperationType type;
