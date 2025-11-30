@@ -3,6 +3,8 @@ spring:
     name: digibank
   config:
     import: classpath:env.properties
+  liquibase:
+    change-log: classpath:/db/changelog/master.xml
 
   datasource:
     url: ${DATABASE_URL}

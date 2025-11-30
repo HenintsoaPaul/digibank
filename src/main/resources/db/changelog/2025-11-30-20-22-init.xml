@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-5.0.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+    <changeSet id="1764523159747-1" author="atlasss">
+        <createSequence incrementBy="1" sequenceName="account_operation_id_seq" startValue="1"/>
+    </changeSet>
+
+    <changeSet id="1764523159747-2" author="atlasss">
+        <createSequence incrementBy="1" sequenceName="customer_id_seq" startValue="1"/>
+    </changeSet>
+
+    <changeSet id="1764523159747-3" author="atlasss">
+        <createTable tableName="account_operation">
+            <column name="amount" type="DOUBLE precision">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="SMALLINT"/>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="account_operation_pkey"/>
+            </column>
+            <column name="operation_date" type="timestamp"/>
+            <column name="bank_account_id" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1764523159747-4" author="atlasss">
+        <createTable tableName="bank_account">
+            <column name="balance" type="DOUBLE precision">
+                <constraints nullable="false"/>
+            </column>
+            <column name="interest_rate" type="DOUBLE precision"/>
+            <column name="over_draft" type="DOUBLE precision"/>
+            <column name="status" type="SMALLINT"/>
+            <column name="create_at" type="timestamp"/>
+            <column name="customer_id" type="BIGINT"/>
+            <column name="dtype" type="VARCHAR(31)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="bank_account_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1764523159747-5" author="atlasss">
+        <createTable tableName="customer">
+            <column name="created_at" type="timestamp"/>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="customer_pkey"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1764523159747-6" author="atlasss">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="bank_account"
+                                 constraintName="fkj818ht4ban0c4uw4bmsbf3jme" onDelete="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="customer"/>
+    </changeSet>
+
+    <changeSet id="1764523159747-7" author="atlasss">
+        <addForeignKeyConstraint baseColumnNames="bank_account_id" baseTableName="account_operation"
+                                 constraintName="fkmimm8esca3p6ux3s6bdwvu1cn" onDelete="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="bank_account"/>
+    </changeSet>
+
+</databaseChangeLog>
