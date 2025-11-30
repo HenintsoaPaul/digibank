@@ -1,6 +1,7 @@
 package com.tsoa.digibank.data.models;
 
 import com.tsoa.digibank.data.enums.OperationType;
+import com.tsoa.digibank.data.models.bankaccount.BankAccount;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
