@@ -20,6 +20,9 @@ import {Router} from '@angular/router';
   templateUrl: './customer-list.component.html',
 })
 export class CustomerList implements OnInit {
+  readonly listTitle = "Customers";
+  nbRows = 5;
+
   customers: Customer[] = []
   filteredCustomers: Customer[] = [];
 
