@@ -1,6 +1,7 @@
 import {Routes} from '@angular/router';
 import {CustomerList} from '../features/customers/customer-list/customer-list.component';
-import {CustomerDetail} from '../features/customers/customer-detail/customer-detail';
+import {CustomerDetailComponent} from '../features/customers/customer-detail/customer-detail.component';
+import {CustomerDetailResolver} from '../features/customers/customer-detail/customer-detail-resolver';
 
 export const routes: Routes = [
   {
@@ -9,6 +10,9 @@ export const routes: Routes = [
   },
   {
     path: 'customers/:id',
-    component: CustomerDetail
+    component: CustomerDetailComponent,
+    resolve: {
+      customer: CustomerDetailResolver
+    }
   },
 ];

@@ -17,7 +17,7 @@ export class CustomerService {
     return this.http.get<Customer[]>(this._apiUrl)
   }
 
-  public searchCustomers(keyword: String): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this._apiUrl + "/search?keyword=" + keyword)
+  public getCustomerById(id: string): Observable<Customer> {
+    return this.http.get<Customer>(this._apiUrl + "/" + id);
   }
 }

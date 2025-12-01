@@ -8,13 +8,18 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './customer-detail.component.html',
 })
 export class CustomerDetailComponent {
-  readonly customerId!: string;
-  readonly customer!: Customer;
+  customerId: string = '';
+  customer?: Customer = undefined;
 
   private route = inject(ActivatedRoute);
 
   constructor() {
-    this.customerId = this.route.snapshot.params['id'];
-    this.customer = this.route.snapshot.data as Customer;
+    this.route.data.subscribe((data) => {
+      this.customer = data['customer'];
+    })
+
+    this.route.params.subscribe((params) => {
+      this.customerId = params['id'] as string;
+    })
   }
 }
