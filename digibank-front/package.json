@@ -41,8 +41,7 @@
     "@angular/cli": "^20",
     "@angular/compiler-cli": "^20",
     "jsdom": "^27.1.0",
-    "typescript": "~5.9.2",
-    "vitest": "^4.0.8"
+    "schematics-scss-migrate": "^2.3.17",
     "typescript": "~5.8.3"
   }
 }
