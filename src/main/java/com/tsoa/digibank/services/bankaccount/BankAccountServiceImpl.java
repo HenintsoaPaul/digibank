@@ -85,4 +85,14 @@ public class BankAccountServiceImpl implements BankAccountService {
                 .map(this::getBaDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<BankAccountDTO> bankAccountListByCustomer(Long customerId) throws CustomerNotFoundException {
+        Customer customer = customerRepository.findById(customerId).orElseThrow(CustomerNotFoundException::new);
+
+        List<BankAccount> bankAccounts = bankAccountRepository.findBankAccountsByCustomer(customer);
+        return bankAccounts.stream()
+                .map(this::getBaDto)
+                .collect(Collectors.toList());
+    }
 }
