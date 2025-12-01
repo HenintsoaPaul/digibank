@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {Customer} from '../models/customer.model';
 import {CustomerService} from '../services/customer.service';
 import {Router} from '@angular/router';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-customers',
@@ -15,7 +16,8 @@ import {Router} from '@angular/router';
     InputIcon,
     InputText,
     TableModule,
-    FormsModule
+    FormsModule,
+    Button
   ],
   templateUrl: './customer-list.component.html',
 })
@@ -28,6 +30,9 @@ export class CustomerList implements OnInit {
 
   searchQuery = '';
   loading = false;
+
+  customerService = inject(CustomerService);
+  router = inject(Router);
 
   ngOnInit() {
     this._fetchData();
@@ -49,9 +54,6 @@ export class CustomerList implements OnInit {
     })
   }
 
-  constructor(private customerService: CustomerService, private router: Router) {
-  }
-
   handleSearch = () => {
     const query = this.searchQuery.trim().toLowerCase();
 
@@ -68,4 +70,12 @@ export class CustomerList implements OnInit {
       this.loading = false;
     }, 300);
   };
+
+  viewCustomer(id: number) {
+    this.router.navigate(['/customers', id]);
+  }
+
+  editCustomer(id: number) {
+    this.router.navigate(['/customers', id, 'edit']);
+  }
 }

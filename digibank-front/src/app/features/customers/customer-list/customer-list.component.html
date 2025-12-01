@@ -37,7 +37,7 @@
         <th>
           Email
         </th>
-        <th>
+        <th style="width: 150px">
           Actions
         </th>
       </tr>
@@ -48,7 +48,19 @@
         <td>{{ customer.name }}</td>
         <td>{{ customer.email }}</td>
         <td>
-          <button (click)="goTo(c)">Operations</button>
+          <p-button
+            icon="pi pi-eye"
+            variant="outlined"
+            severity="info"
+            (click)="viewCustomer(customer.id)"
+          ></p-button>
+
+          <p-button
+            icon="pi pi-pencil"
+            variant="outlined"
+            severity="warn"
+            (click)="editCustomer(customer.id)"
+          ></p-button>
         </td>
       </tr>
     </ng-template>
