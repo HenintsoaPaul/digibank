@@ -1,14 +1,14 @@
 import {Routes} from '@angular/router';
-import {Accounts} from '../features/accounts/accounts';
-import {Customers} from '../features/customers/customers';
+import {CustomerList} from '../features/customers/customer-list/customer-list.component';
+import {CustomerDetail} from '../features/customers/customer-detail/customer-detail';
 
 export const routes: Routes = [
   {
-    path: 'accounts',
-    component: Accounts
+    path: 'customers',
+    component: CustomerList
   },
   {
-    path: 'customers',
-    component: Customers
+    path: 'customers/:id',
+    component: CustomerDetail
   },
 ];

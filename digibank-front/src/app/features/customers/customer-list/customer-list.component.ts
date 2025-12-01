@@ -4,8 +4,9 @@ import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {TableModule} from 'primeng/table';
 import {FormsModule} from '@angular/forms';
-import {Customer} from './models/customer.model';
-import {CustomerService} from './services/customer.service';
+import {Customer} from '../models/customer.model';
+import {CustomerService} from '../services/customer.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -16,10 +17,9 @@ import {CustomerService} from './services/customer.service';
     TableModule,
     FormsModule
   ],
-  templateUrl: './customers.html',
-  styleUrl: './customers.scss',
+  templateUrl: './customer-list.component.html',
 })
-export class Customers implements OnInit {
+export class CustomerList implements OnInit {
   customers: Customer[] = []
   filteredCustomers: Customer[] = [];
 
@@ -46,7 +46,7 @@ export class Customers implements OnInit {
     })
   }
 
-  constructor(private customerService: CustomerService) {
+  constructor(private customerService: CustomerService, private router: Router) {
   }
 
   handleSearch = () => {
