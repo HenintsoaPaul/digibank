@@ -13,11 +13,11 @@ export class CustomerService {
   constructor(private http: HttpClient) {
   }
 
-  public getCustomers(): Observable<Array<Customer>> {
-    return this.http.get<Array<Customer>>(this._apiUrl)
+  public getCustomers(): Observable<Customer[]> {
+    return this.http.get<Customer[]>(this._apiUrl)
   }
 
-  public searchCustomers(keyword: String): Observable<Array<Customer>> {
-    return this.http.get<Array<Customer>>(this._apiUrl + "/search?keyword=" + keyword)
+  public searchCustomers(keyword: String): Observable<Customer[]> {
+    return this.http.get<Customer[]>(this._apiUrl + "/search?keyword=" + keyword)
   }
 }

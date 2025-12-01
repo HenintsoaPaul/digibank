@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {TableModule} from 'primeng/table';
 import {FormsModule} from '@angular/forms';
 import {Customer} from './models/customer.model';
+import {CustomerService} from './services/customer.service';
 
 @Component({
   selector: 'app-customers',
@@ -18,48 +19,44 @@ import {Customer} from './models/customer.model';
   templateUrl: './customers.html',
   styleUrl: './customers.scss',
 })
-export class Customers {
-  customers: Customer[] = [
-    {
-      id: 2499,
-      name: 'Laptop Pro',
-      email: 'In Stock',
-    },
-    {
-      id: 49,
-      name: 'Wireless Mouse',
-      email: 'Low Stock',
-    },
-    {
-      id: 699,
-      name: 'Monitor 4K',
-      email: 'Out of Stock',
-    },
-    {
-      id: 149,
-      name: 'Keyboard',
-      email: 'In Stock',
-    },
-  ];
+export class Customers implements OnInit {
+  customers: Customer[] = []
+  filteredCustomers: Customer[] = [];
 
   searchQuery = '';
-
   loading = false;
 
-  filteredCustomers: any = [];
-
-  constructor() {
-    this.filteredCustomers = [...this.customers];
+  ngOnInit() {
+    this._fetchData();
   }
 
-  onSearchChange = () => {
+  private _fetchData() {
+    this.loading = true;
+
+    this.customerService.getCustomers().subscribe({
+      next: (data) => {
+        this.customers = data;
+        this.filteredCustomers = data;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Failed to fetch data:', err);
+        this.loading = false;
+      }
+    })
+  }
+
+  constructor(private customerService: CustomerService) {
+  }
+
+  handleSearch = () => {
+    const query = this.searchQuery.trim().toLowerCase();
+
     this.filteredCustomers = this.customers.filter(
-      (product) =>
-        product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        product.email
-          .toLowerCase()
-          .includes(this.searchQuery.toLowerCase()) ||
-        product.id.toString().includes(this.searchQuery.toString())
+      (customer) =>
+        customer.name.toLowerCase().includes(query) ||
+        customer.email.toLowerCase().includes(query) ||
+        customer.id.toString().includes(query)
     );
 
     this.loading = true;
