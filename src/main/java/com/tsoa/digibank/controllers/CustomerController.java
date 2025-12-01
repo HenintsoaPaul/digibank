@@ -1,7 +1,9 @@
 package com.tsoa.digibank.controllers;
 
 import com.tsoa.digibank.data.dtos.CustomerDTO;
+import com.tsoa.digibank.data.dtos.bankaccount.BankAccountDTO;
 import com.tsoa.digibank.exceptions.CustomerNotFoundException;
+import com.tsoa.digibank.services.bankaccount.BankAccountService;
 import com.tsoa.digibank.services.customer.CustomerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,16 +17,16 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
     private CustomerService customerService;
+    private BankAccountService bankAccountService;
 
     @GetMapping
     public List<CustomerDTO> customers() {
         return customerService.listCustomers();
     }
 
-    @GetMapping("/search")
-    public List<CustomerDTO> searchCustomers(@RequestParam(name = "keyword", defaultValue = "") String keyword) {
-
-        return customerService.searchCustomers("%" + keyword + "%");
+    @GetMapping("/{id}/accounts")
+    public List<BankAccountDTO> getCustomerBankAccounts(@PathVariable(name = "id") Long customerId) throws CustomerNotFoundException {
+        return bankAccountService.bankAccountListByCustomer(customerId);
     }
 
     @GetMapping("/{id}")

@@ -13,6 +13,8 @@ public interface BankAccountService {
 
     List<BankAccountDTO> bankAccountList();
 
+    List<BankAccountDTO> bankAccountListByCustomer(Long customerId) throws CustomerNotFoundException;
+
     CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
 
     SavingBankAccountDTO saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
