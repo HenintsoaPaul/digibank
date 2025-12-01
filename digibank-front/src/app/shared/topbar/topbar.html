@@ -1,0 +1,28 @@
+<div class="topbar-container">
+  <!-- left -->
+  <div class="topbar-brand">
+    <app-primenglogo [isDarkMode]="isDarkMode()"/>
+    <span class="topbar-brand-text">
+          <span class="topbar-title">Digibank</span>
+        </span>
+  </div>
+
+  <!-- right -->
+  <div class="topbar-actions">
+    <p-button
+      type="button"
+      class="topbar-theme-button"
+      (click)="toggleDarkMode()"
+      text
+      rounded
+    >
+      <i
+        class="pi"
+        [ngClass]="{
+              'pi-moon': isDarkMode(),
+              'pi-sun': !isDarkMode()
+            }"
+      ></i>
+    </p-button>
+  </div>
+</div>
