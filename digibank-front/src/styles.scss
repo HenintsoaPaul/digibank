@@ -10,6 +10,15 @@ html {
   font-weight: 400;
 }
 
+html.theme-transition,
+html.theme-transition * {
+  transition: background-color 300ms ease,
+  color 300ms ease,
+  border-color 300ms ease,
+  fill 300ms ease,
+  stroke 300ms ease;
+}
+
 body {
   background-color: var(--p-surface-50);
   min-height: 100vh;
