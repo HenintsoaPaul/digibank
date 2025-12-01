@@ -1,1 +1,37 @@
-<p>customer-detail works!</p>
+<h2>{{ customer!.name }}</h2>
+<p>Email: {{ customer!.email }}</p>
+
+<h3>Accounts</h3>
+
+@if (loadingAccounts) {
+  <!-- Show Skeleton while loading -->
+  <div>
+    <p-skeleton width="100%" height="2rem"></p-skeleton>
+    <p-skeleton width="90%" height="2rem"></p-skeleton>
+    <p-skeleton width="95%" height="2rem"></p-skeleton>
+  </div>
+} @else {
+  <!-- Show actual accounts when loaded -->
+  <table>
+    <thead>
+    <tr>
+      <th>Account number</th>
+      <th>Type</th>
+      <th>Status</th>
+      <th>Balance</th>
+    </tr>
+    </thead>
+
+    <tbody>
+      @for (account of accounts; track account.id) {
+        <tr>
+          <td>{{ account.id }}</td>
+          <td>{{ account.type }}</td>
+          <td>{{ account.status }}</td>
+          <td>{{ account.balance }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}
+
