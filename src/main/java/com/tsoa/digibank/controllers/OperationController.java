@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@CrossOrigin("*")
 @RequestMapping("/accounts")
 public class OperationController {
     private OperationService operationService;

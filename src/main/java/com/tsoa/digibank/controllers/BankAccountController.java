@@ -10,9 +10,8 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin("*")
 @RequestMapping("/accounts")
-public class BankAccountRestAPI {
+public class BankAccountController {
     private BankAccountService bankAccountService;
 
     @GetMapping("/{accountId}")
