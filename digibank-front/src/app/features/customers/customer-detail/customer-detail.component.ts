@@ -1,14 +1,22 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {Customer} from '../models/customer.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {BankAccountService} from '../../bank-accounts/services/bank-account.service';
 import {BankAccount} from "../../bank-accounts/models/bank-account.model";
 import {Skeleton} from 'primeng/skeleton';
+import {Button} from 'primeng/button';
+import {PrimeTemplate} from 'primeng/api';
+import {ReactiveFormsModule} from '@angular/forms';
+import {TableModule} from 'primeng/table';
 
 @Component({
   selector: 'app-customer-detail',
   imports: [
     Skeleton,
+    Button,
+    PrimeTemplate,
+    ReactiveFormsModule,
+    TableModule,
   ],
   templateUrl: './customer-detail.component.html',
 })
@@ -18,6 +26,7 @@ export class CustomerDetailComponent implements OnInit {
   accounts: BankAccount[] = [];
   loadingAccounts: boolean = false;
 
+  private router = inject(Router);
   private route = inject(ActivatedRoute);
   private accountService = inject(BankAccountService);
 
@@ -39,5 +48,9 @@ export class CustomerDetailComponent implements OnInit {
         this.loadingAccounts = false;
       }
     });
+  }
+
+  viewAccount(id: string) {
+    this.router.navigate(['/bank-accounts', id]);
   }
 }
