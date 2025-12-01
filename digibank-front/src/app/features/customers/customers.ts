@@ -4,12 +4,7 @@ import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {TableModule} from 'primeng/table';
 import {FormsModule} from '@angular/forms';
-
-export interface Customer {
-  id: number;
-  name: string;
-  email: string;
-}
+import {Customer} from './models/customer.model';
 
 @Component({
   selector: 'app-customers',
