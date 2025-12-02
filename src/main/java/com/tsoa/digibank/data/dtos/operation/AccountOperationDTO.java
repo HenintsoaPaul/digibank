@@ -8,7 +8,7 @@ import java.sql.Date;
 @Data
 public class AccountOperationDTO {
     private Long id;
-    private Date operationDate;
+    private Date date;
     private double amount;
     private OperationType type;
     private String description;
