@@ -1,0 +1,59 @@
+<h3>Bank accounts</h3>
+
+@if (loadingOperations()) {
+  <!-- Show Skeleton while loading -->
+  <div>
+    <p-skeleton width="100%" height="2rem"></p-skeleton>
+    <p-skeleton width="90%" height="2rem"></p-skeleton>
+    <p-skeleton width="95%" height="2rem"></p-skeleton>
+  </div>
+} @else {
+  <!-- Content -->
+  <div class="mytable-table-container">
+    <p-table
+      [value]="operations()"
+      [rows]="10"
+      [loading]="loadingOperations()"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            Id
+          </th>
+          <th pSortableColumn="operationDate">
+            <p-sortIcon field="operationDate"/>
+            Date
+          </th>
+          <th pSortableColumn="type">
+            <p-sortIcon field="type"/>
+            Type
+          </th>
+          <th pSortableColumn="amount">
+            <p-sortIcon field="amount"/>
+            Amount
+          </th>
+          <th>
+            Description
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-operation>
+        <tr>
+          <td>{{ operation.id }}</td>
+          <td>{{ operation.operationDate }}</td>
+          <td>{{ operation.type }}</td>
+          <td>{{ operation.amount }}</td>
+          <td>{{ operation.description }}</td>
+<!--          <td>-->
+<!--            <p-button-->
+<!--              icon="pi pi-eye"-->
+<!--              variant="outlined"-->
+<!--              severity="info"-->
+<!--              (click)="viewAccount(account.id)"-->
+<!--            ></p-button>-->
+<!--          </td>-->
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+}
