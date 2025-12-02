@@ -11,7 +11,7 @@ export class OperationService {
   constructor(private http: HttpClient) {
   }
 
-  public getOperationsByCustomer(customerId: number): Observable<Operation[]> {
+  public getOperationsByCustomer(customerId: string): Observable<Operation[]> {
     return this.http.get<Operation[]>(environment.backendHost + "/accounts/" + customerId + "/operations");
   }
 }

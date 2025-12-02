@@ -13,8 +13,8 @@ export class BankAccountService {
   constructor(private http: HttpClient) {
   }
 
-  public getAccounts(): Observable<BankAccount[]> {
-    return this.http.get<BankAccount[]>(this._apiUrl)
+  public getBankAccountById(id: string): Observable<BankAccount> {
+    return this.http.get<BankAccount>(this._apiUrl + "/" + id);
   }
 
   public getBankAccountsByCustomer(customerId: number): Observable<BankAccount[]> {

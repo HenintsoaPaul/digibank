@@ -1,0 +1,10 @@
+<h2>{{ bankAccount!.type }}</h2>
+<p>Id: {{ bankAccount!.id }}</p>
+<p>Status: {{ bankAccount!.status }}</p>
+
+<br>
+<app-operation-list
+  [loadingOperations]="loadingOperations"
+  [operations]="operations"
+/>
+
