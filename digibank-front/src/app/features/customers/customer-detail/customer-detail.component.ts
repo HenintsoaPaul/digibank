@@ -45,8 +45,4 @@ export class CustomerDetailComponent implements OnInit {
       }
     });
   }
-
-  viewAccount(id: string) {
-    this.router.navigate(['/bank-accounts', id]);
-  }
 }

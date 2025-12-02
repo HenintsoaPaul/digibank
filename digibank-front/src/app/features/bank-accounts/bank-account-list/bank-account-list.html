@@ -32,9 +32,9 @@
             <p-sortIcon field="balance"/>
             Balance
           </th>
-<!--          <th>-->
-<!--            Actions-->
-<!--          </th>-->
+          <th>
+            Actions
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-account>
@@ -43,14 +43,14 @@
           <td>{{ account.type }}</td>
           <td>{{ account.status }}</td>
           <td>{{ account.balance }}</td>
-<!--          <td>-->
-<!--            <p-button-->
-<!--              icon="pi pi-eye"-->
-<!--              variant="outlined"-->
-<!--              severity="info"-->
-<!--              (click)="viewAccount(account.id)"-->
-<!--            ></p-button>-->
-<!--          </td>-->
+          <td>
+            <p-button
+              icon="pi pi-eye"
+              variant="outlined"
+              severity="info"
+              (click)="viewAccount(account.id)"
+            ></p-button>
+          </td>
         </tr>
       </ng-template>
     </p-table>
