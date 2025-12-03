@@ -1,14 +1,10 @@
-<div class="topbar-container">
-  <!-- left -->
-  <div class="topbar-brand">
-    <app-primenglogo [isDarkMode]="isDarkMode()"/>
-    <span class="topbar-brand-text">
-          <span class="topbar-title">Digibank</span>
-        </span>
-  </div>
-
-  <!-- right -->
-  <div class="topbar-actions">
+<p-menubar
+  [model]="menuItems"
+>
+<!--  <ng-template #start>-->
+<!--    <app-primenglogo [isDarkMode]="isDarkMode()"/>-->
+<!--  </ng-template>-->
+  <ng-template #end>
     <p-button
       type="button"
       class="topbar-theme-button"
@@ -24,5 +20,5 @@
             }"
       ></i>
     </p-button>
-  </div>
-</div>
+  </ng-template>
+</p-menubar>
