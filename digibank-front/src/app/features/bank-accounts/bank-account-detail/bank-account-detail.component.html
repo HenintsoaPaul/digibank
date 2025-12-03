@@ -1,10 +1,12 @@
-<h2>{{ bankAccount!.type }}</h2>
-<p>Id: {{ bankAccount!.id }}</p>
-<p>Status: {{ bankAccount!.status }}</p>
+<div class="layout-grid">
+  <div class="layout-card">
+    <h2>{{ bankAccount!.type }}</h2>
+    <p>Id: {{ bankAccount!.id }}</p>
+    <p>Status: {{ bankAccount!.status }}</p>
+  </div>
 
-<br>
-<app-operation-list
-  [loadingOperations]="loadingOperations"
-  [operations]="operations"
-/>
-
+  <app-operation-list
+    [loadingOperations]="loadingOperations"
+    [operations]="operations"
+  />
+</div>

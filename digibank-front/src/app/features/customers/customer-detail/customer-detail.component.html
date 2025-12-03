@@ -1,9 +1,13 @@
-<h2>{{ customer!.name }}</h2>
-<p>Email: {{ customer!.email }}</p>
+<div class="layout-grid">
+  <div class="layout-card">
+    <h2>{{ customer!.name }}</h2>
+    <p>Email: {{ customer!.email }}</p>
+  </div>
 
-<br>
-<app-bank-account-list
-  [loadingAccounts]="loadingAccounts"
-  [bankAccounts]="accounts"
-/>
+  <app-bank-account-list
+    [loadingAccounts]="loadingAccounts"
+    [bankAccounts]="accounts"
+  />
+</div>
+
 
