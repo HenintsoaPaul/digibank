@@ -1,68 +1,71 @@
-<!-- Header-->
-<div class="mytable-header">
-  <!-- Title -->
-  <span class="mytable-title">{{ listTitle }}</span>
+<div class="layout-card">
+  <!-- Header-->
+  <div class="mytable-header">
+    <!-- Title -->
+    <span class="mytable-title">{{ listTitle }}</span>
 
-  <!-- Search -->
-  <p-iconfield class="search-field">
-    <p-inputicon class="pi pi-search"/>
-    <input
-      pInputText
-      placeholder="Search..."
-      class="search-input"
-      [(ngModel)]="searchQuery"
-      (ngModelChange)="handleSearch()"
-    />
-  </p-iconfield>
-</div>
+    <!-- Search -->
+    <p-iconfield class="search-field">
+      <p-inputicon class="pi pi-search"/>
+      <input
+        pInputText
+        placeholder="Search..."
+        class="search-input"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="handleSearch()"
+      />
+    </p-iconfield>
+  </div>
 
-<!-- Content -->
-<div class="mytable-table-container">
-  <p-table
-    [value]="filteredCustomers"
-    [paginator]="true"
-    [rows]="nbRows"
-    [loading]="loading"
-  >
-    <ng-template pTemplate="header">
-      <tr>
-        <th pSortableColumn="id">
-          ID
-          <p-sortIcon field="id"/>
-        </th>
-        <th pSortableColumn="name">
-          Name
-          <p-sortIcon field="name"/>
-        </th>
-        <th>
-          Email
-        </th>
-        <th style="width: 150px">
-          Actions
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-customer>
-      <tr>
-        <td>{{ customer.id }}</td>
-        <td>{{ customer.name }}</td>
-        <td>{{ customer.email }}</td>
-        <td>
-          <p-button
-            icon="pi pi-eye"
-            variant="outlined"
-            severity="info"
-            (click)="viewCustomer(customer.id)"
-          ></p-button>
+  <!-- Content -->
+  <div class="mytable-table-container">
+    <p-table
+      [value]="filteredCustomers"
+      [paginator]="true"
+      [rows]="nbRows"
+      [loading]="loading"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">
+            ID
+            <p-sortIcon field="id"/>
+          </th>
+          <th pSortableColumn="name">
+            Name
+            <p-sortIcon field="name"/>
+          </th>
+          <th>
+            Email
+          </th>
+          <th style="width: 150px">
+            Actions
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-customer>
+        <tr>
+          <td>{{ customer.id }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>
+            <p-button
+              icon="pi pi-eye"
+              variant="outlined"
+              severity="info"
+              (click)="viewCustomer(customer.id)"
+            ></p-button>
 
-          <p-button
-            icon="pi pi-pencil"
-            variant="outlined"
-            severity="warn"
-            (click)="editCustomer(customer.id)"
-          ></p-button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+            <p-button
+              icon="pi pi-pencil"
+              variant="outlined"
+              severity="warn"
+              (click)="editCustomer(customer.id)"
+            ></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
 </div>
