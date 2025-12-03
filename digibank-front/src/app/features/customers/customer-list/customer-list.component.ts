@@ -8,6 +8,7 @@ import {Customer} from '../models/customer.model';
 import {CustomerService} from '../services/customer.service';
 import {Router} from '@angular/router';
 import {Button} from 'primeng/button';
+import {Dialog} from 'primeng/dialog';
 
 @Component({
   selector: 'app-customers',
@@ -17,7 +18,8 @@ import {Button} from 'primeng/button';
     InputText,
     TableModule,
     FormsModule,
-    Button
+    Button,
+    Dialog
   ],
   templateUrl: './customer-list.component.html',
 })
@@ -77,5 +79,13 @@ export class CustomerList implements OnInit {
 
   editCustomer(id: number) {
     this.router.navigate(['/customers', id, 'edit']);
+  }
+
+  // -- DIALOG --
+
+  visible = false;
+
+  showDialog() {
+    this.visible = true;
   }
 }
