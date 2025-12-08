@@ -1,0 +1,11 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--  Setup tables  -->
+    <include file="/db/changelog/2025-11-30-20-22-init.xml"/>
+
+    <!--  Seed data  -->
+    <include file="db/changelog/test-seed-data.xml"/>
+
+</databaseChangeLog>
