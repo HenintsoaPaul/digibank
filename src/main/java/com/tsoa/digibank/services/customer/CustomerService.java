@@ -15,6 +15,4 @@ public interface CustomerService {
     List<CustomerDTO> listCustomers();
 
     CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
-
-    List<CustomerDTO> searchCustomers(String keyword);
 }

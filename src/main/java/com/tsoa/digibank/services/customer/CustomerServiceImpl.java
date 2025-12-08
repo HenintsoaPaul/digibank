@@ -55,12 +55,4 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(CustomerNotFoundException::new);
         return dtoMapper.fromCustomer(customer);
     }
-
-    @Override
-    public List<CustomerDTO> searchCustomers(String keyword) {
-        List<Customer> customers = customerRepository.searchCustomer(keyword);
-        return customers.stream()
-                .map(e -> dtoMapper.fromCustomer(e))
-                .collect(Collectors.toList());
-    }
 }
