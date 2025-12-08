@@ -1,14 +1,14 @@
-# Overview
+# DigiBank
 
-Simple REST API for bank accounts.
+DigiBank is a full-stack web application designed to manage banking accounts with real-time monitoring of balances, operations, and loan amortization.
+It provides a modern, secure, and modular architecture using Angular, Spring Boot, Spring Security, Spring Data JPA, Liquibase, and Docker.
 
 ## Features
 
-1. List of customers
-2. Customer detail + list of accounts
-3. Transaction history
-4. Fund transfer between accounts
-5. Loan depreciation schedule
+1. Accounts Management
+2. Transactions & Operations
+3. Loans Management
+
 
 ## Setup
 
