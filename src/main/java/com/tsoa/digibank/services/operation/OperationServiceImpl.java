@@ -75,7 +75,7 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException, NegativeAmountException {
-        debit(accountIdSource, amount, "Trasfert to " + accountIdDestination);
+        debit(accountIdSource, amount, "Transfer to " + accountIdDestination);
         credit(accountIdDestination, amount, "Transfer from " + accountIdSource);
     }
 
