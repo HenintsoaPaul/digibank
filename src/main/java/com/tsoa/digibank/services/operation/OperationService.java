@@ -7,6 +7,8 @@ import com.tsoa.digibank.exceptions.operation.AccountOperationNotFoundException;
 import com.tsoa.digibank.exceptions.BalanceNotSufficientException;
 import com.tsoa.digibank.exceptions.BankAccountNotFoundException;
 import com.tsoa.digibank.exceptions.NegativeAmountException;
+import com.tsoa.digibank.exceptions.operation.TransferOperationAlreadyValidatedException;
+import com.tsoa.digibank.exceptions.operation.TransferOperationNotFoundException;
 
 import java.util.List;
 
@@ -20,6 +22,8 @@ public interface OperationService {
     void validateDebit(Long operationId) throws AccountOperationNotFoundException, AccountOperationAlreadyValidatedException;
 
     void validateCredit(Long operationId) throws AccountOperationNotFoundException, AccountOperationAlreadyValidatedException;
+
+    void validateTransfer(Long transferId) throws TransferOperationAlreadyValidatedException, TransferOperationNotFoundException, AccountOperationNotFoundException, AccountOperationAlreadyValidatedException;
 
     List<AccountOperationDTO> accountHistory(String accountId);
 

@@ -4,15 +4,19 @@ import com.tsoa.digibank.data.dtos.operation.AccountOperationDTO;
 import com.tsoa.digibank.data.enums.OperationStatus;
 import com.tsoa.digibank.data.enums.OperationType;
 import com.tsoa.digibank.data.models.AccountOperation;
+import com.tsoa.digibank.data.models.TransferOperation;
 import com.tsoa.digibank.data.models.bankaccount.BankAccount;
 import com.tsoa.digibank.exceptions.operation.AccountOperationAlreadyValidatedException;
 import com.tsoa.digibank.exceptions.operation.AccountOperationNotFoundException;
 import com.tsoa.digibank.exceptions.BalanceNotSufficientException;
 import com.tsoa.digibank.exceptions.BankAccountNotFoundException;
 import com.tsoa.digibank.exceptions.NegativeAmountException;
+import com.tsoa.digibank.exceptions.operation.TransferOperationAlreadyValidatedException;
+import com.tsoa.digibank.exceptions.operation.TransferOperationNotFoundException;
 import com.tsoa.digibank.mappers.AppMapper;
 import com.tsoa.digibank.repositories.AccountOperationRepository;
 import com.tsoa.digibank.repositories.BankAccountRepository;
+import com.tsoa.digibank.repositories.TransferOperationRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +29,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Slf4j
 public class OperationServiceImpl implements OperationService {
+    private TransferOperationRepository transferOperationRepository;
     private AppMapper dtoMapper;
     private BankAccountRepository bankAccountRepository;
     private AccountOperationRepository accountOperationRepository;
@@ -77,8 +82,20 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException, NegativeAmountException {
-        debit(accountIdSource, amount, "Transfer to " + accountIdDestination);
-        credit(accountIdDestination, amount, "Transfer from " + accountIdSource);
+        AccountOperation debit = debit(accountIdSource, amount, "Transfer to " + accountIdDestination),
+                credit = credit(accountIdDestination, amount, "Transfer from " + accountIdSource);
+
+        TransferOperation transferOperation = new TransferOperation();
+        transferOperation.setAmount(amount);
+        transferOperation.getOperations().add(debit);
+        transferOperation.getOperations().add(credit);
+        transferOperation.setOperationDate(new Date());
+        transferOperation.setStatus(OperationStatus.PENDING);
+        transferOperation.setDescription("Transfer from " + accountIdSource + " to " + accountIdDestination);
+
+        transferOperationRepository.save(transferOperation);
+    }
+
     @Override
     public void validateDebit(Long operationId) throws AccountOperationNotFoundException, AccountOperationAlreadyValidatedException {
         AccountOperation operation = accountOperationRepository.findById(operationId)
@@ -105,6 +122,16 @@ public class OperationServiceImpl implements OperationService {
         bankAccountRepository.save(bankAccount);
     }
 
+    @Override
+    public void validateTransfer(Long transferId) throws TransferOperationAlreadyValidatedException, TransferOperationNotFoundException, AccountOperationNotFoundException, AccountOperationAlreadyValidatedException {
+        TransferOperation transfer = transferOperationRepository.findById(transferId)
+                .orElseThrow(TransferOperationNotFoundException::new);
+
+        if (transfer.getStatus() == OperationStatus.VALIDATED)
+            throw new TransferOperationAlreadyValidatedException();
+
+        validateDebit(transfer.getDebit().getId());
+        validateCredit(transfer.getCredit().getId());
     }
 
     @Override
