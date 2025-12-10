@@ -3,6 +3,7 @@ package com.tsoa.digibank.services.operation;
 import com.tsoa.digibank.data.models.AccountOperation;
 import com.tsoa.digibank.data.models.bankaccount.BankAccount;
 import com.tsoa.digibank.exceptions.BankAccountNotFoundException;
+import com.tsoa.digibank.exceptions.NegativeAmountException;
 import com.tsoa.digibank.repositories.AccountOperationRepository;
 import com.tsoa.digibank.repositories.BankAccountRepository;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ class OperationServiceImplTest {
     private OperationServiceImpl operationService;
 
     @Test
-    void credit_shouldIncreaseBalance() throws Exception {
+    void credit_shouldIncreaseBalance() throws NegativeAmountException, BankAccountNotFoundException {
         String id = "1L";
         double initialAmount = 100;
 
@@ -58,7 +59,7 @@ class OperationServiceImplTest {
                 bankAccount.getBalance()
         );
 
-        // ... Also verify method calls of correct logic
+        // ...also verify method calls of correct logic
         verify(bankAccountRepository).findById(id);
         verify(bankAccountRepository).save(bankAccount);
         verify(repository).save(any(AccountOperation.class));
@@ -75,8 +76,8 @@ class OperationServiceImplTest {
     @Test
     void debit_shouldThrowIfNegativeAmount() {
         assertThrows(
-                BankAccountNotFoundException.class,
-                () -> operationService.debit("10L", 100, "desc")
+                NegativeAmountException.class,
+                () -> operationService.debit("10L", -100, "desc")
         );
     }
 }
