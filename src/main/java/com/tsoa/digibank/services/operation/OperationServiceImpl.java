@@ -1,9 +1,12 @@
 package com.tsoa.digibank.services.operation;
 
 import com.tsoa.digibank.data.dtos.operation.AccountOperationDTO;
+import com.tsoa.digibank.data.enums.OperationStatus;
 import com.tsoa.digibank.data.enums.OperationType;
 import com.tsoa.digibank.data.models.AccountOperation;
 import com.tsoa.digibank.data.models.bankaccount.BankAccount;
+import com.tsoa.digibank.exceptions.operation.AccountOperationAlreadyValidatedException;
+import com.tsoa.digibank.exceptions.operation.AccountOperationNotFoundException;
 import com.tsoa.digibank.exceptions.BalanceNotSufficientException;
 import com.tsoa.digibank.exceptions.BankAccountNotFoundException;
 import com.tsoa.digibank.exceptions.NegativeAmountException;
@@ -35,11 +38,12 @@ public class OperationServiceImpl implements OperationService {
         accountOperation.setDescription(description);
         accountOperation.setOperationDate(new Date());
         accountOperation.setBankAccount(bankAccount);
+        accountOperation.setStatus(OperationStatus.PENDING);
         return accountOperation;
     }
 
     @Override
-    public void debit(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException, NegativeAmountException {
+    public AccountOperation debit(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException, NegativeAmountException {
         if (amount < 0)
             throw new NegativeAmountException();
 
@@ -53,12 +57,11 @@ public class OperationServiceImpl implements OperationService {
         accountOperation.setType(OperationType.DEBIT);
         accountOperationRepository.save(accountOperation);
 
-        bankAccount.setBalance(bankAccount.getBalance() - amount);
-        bankAccountRepository.save(bankAccount);
+        return accountOperation;
     }
 
     @Override
-    public void credit(String accountId, double amount, String description) throws BankAccountNotFoundException, NegativeAmountException {
+    public AccountOperation credit(String accountId, double amount, String description) throws BankAccountNotFoundException, NegativeAmountException {
         if (amount < 0)
             throw new NegativeAmountException();
 
@@ -69,14 +72,39 @@ public class OperationServiceImpl implements OperationService {
         accountOperation.setType(OperationType.CREDIT);
         accountOperationRepository.save(accountOperation);
 
-        bankAccount.setBalance(bankAccount.getBalance() + amount);
-        bankAccountRepository.save(bankAccount);
+        return accountOperation;
     }
 
     @Override
     public void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException, NegativeAmountException {
         debit(accountIdSource, amount, "Transfer to " + accountIdDestination);
         credit(accountIdDestination, amount, "Transfer from " + accountIdSource);
+    @Override
+    public void validateDebit(Long operationId) throws AccountOperationNotFoundException, AccountOperationAlreadyValidatedException {
+        AccountOperation operation = accountOperationRepository.findById(operationId)
+                .orElseThrow(AccountOperationNotFoundException::new);
+
+        if (operation.getStatus() == OperationStatus.VALIDATED)
+            throw new AccountOperationAlreadyValidatedException();
+
+        BankAccount bankAccount = operation.getBankAccount();
+        bankAccount.setBalance(bankAccount.getBalance() - operation.getAmount());
+        bankAccountRepository.save(bankAccount);
+    }
+
+    @Override
+    public void validateCredit(Long operationId) throws AccountOperationNotFoundException, AccountOperationAlreadyValidatedException {
+        AccountOperation operation = accountOperationRepository.findById(operationId)
+                .orElseThrow(AccountOperationNotFoundException::new);
+
+        if (operation.getStatus() == OperationStatus.VALIDATED)
+            throw new AccountOperationAlreadyValidatedException();
+
+        BankAccount bankAccount = operation.getBankAccount();
+        bankAccount.setBalance(bankAccount.getBalance() + operation.getAmount());
+        bankAccountRepository.save(bankAccount);
+    }
+
     }
 
     @Override
