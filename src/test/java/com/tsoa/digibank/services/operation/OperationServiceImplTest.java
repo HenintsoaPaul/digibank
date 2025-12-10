@@ -2,6 +2,7 @@ package com.tsoa.digibank.services.operation;
 
 import com.tsoa.digibank.data.models.AccountOperation;
 import com.tsoa.digibank.data.models.bankaccount.BankAccount;
+import com.tsoa.digibank.exceptions.BankAccountNotFoundException;
 import com.tsoa.digibank.repositories.AccountOperationRepository;
 import com.tsoa.digibank.repositories.BankAccountRepository;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -24,7 +26,7 @@ class OperationServiceImplTest {
     private BankAccountRepository bankAccountRepository;
 
     @Mock
-    private AccountOperationRepository  accountOperationRepository;
+    private AccountOperationRepository repository;
 
     @InjectMocks
     private OperationServiceImpl operationService;
@@ -59,6 +61,22 @@ class OperationServiceImplTest {
         // ... Also verify method calls of correct logic
         verify(bankAccountRepository).findById(id);
         verify(bankAccountRepository).save(bankAccount);
-        verify(accountOperationRepository).save(any(AccountOperation.class));
+        verify(repository).save(any(AccountOperation.class));
+    }
+
+    @Test
+    void debit_shouldThrowIfAccountNotFound() {
+        assertThrows(
+                BankAccountNotFoundException.class,
+                () -> operationService.debit("10L", 100, "desc")
+        );
+    }
+
+    @Test
+    void debit_shouldThrowIfNegativeAmount() {
+        assertThrows(
+                BankAccountNotFoundException.class,
+                () -> operationService.debit("10L", 100, "desc")
+        );
     }
 }
