@@ -1,5 +1,6 @@
 package com.tsoa.digibank.data.models;
 
+import com.tsoa.digibank.data.enums.OperationStatus;
 import com.tsoa.digibank.data.enums.OperationType;
 import com.tsoa.digibank.data.models.bankaccount.BankAccount;
 import jakarta.persistence.*;
@@ -21,6 +22,7 @@ public class AccountOperation {
     private String description;
     private double amount;
     private OperationType type;
+    private OperationStatus status;
 
     @ManyToOne
     private BankAccount bankAccount;
