@@ -6,6 +6,7 @@ import com.tsoa.digibank.data.models.AccountOperation;
 import com.tsoa.digibank.data.models.bankaccount.BankAccount;
 import com.tsoa.digibank.exceptions.BalanceNotSufficientException;
 import com.tsoa.digibank.exceptions.BankAccountNotFoundException;
+import com.tsoa.digibank.exceptions.NegativeAmountException;
 import com.tsoa.digibank.mappers.AppMapper;
 import com.tsoa.digibank.repositories.AccountOperationRepository;
 import com.tsoa.digibank.repositories.BankAccountRepository;
@@ -38,7 +39,10 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public void debit(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException {
+    public void debit(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException, NegativeAmountException {
+        if (amount < 0)
+            throw new NegativeAmountException();
+
         BankAccount bankAccount = bankAccountRepository.findById(accountId)
                 .orElseThrow(BankAccountNotFoundException::new);
 
@@ -54,7 +58,10 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public void credit(String accountId, double amount, String description) throws BankAccountNotFoundException {
+    public void credit(String accountId, double amount, String description) throws BankAccountNotFoundException, NegativeAmountException {
+        if (amount < 0)
+            throw new NegativeAmountException();
+
         BankAccount bankAccount = bankAccountRepository.findById(accountId)
                 .orElseThrow(BankAccountNotFoundException::new);
 
@@ -67,7 +74,7 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException {
+    public void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficientException, NegativeAmountException {
         debit(accountIdSource, amount, "Trasfert to " + accountIdDestination);
         credit(accountIdDestination, amount, "Transfer from " + accountIdSource);
     }
