@@ -26,4 +26,8 @@ public class AccountOperation {
 
     @ManyToOne
     private BankAccount bankAccount;
+
+    @ManyToOne
+    @JoinColumn(name = "transfer_id")
+    private TransferOperation transfer;
 }
