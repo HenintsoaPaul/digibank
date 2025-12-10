@@ -20,7 +20,6 @@
     </changeSet>
     <changeSet id="1765392192124-4" author="atlasss">
         <addColumn tableName="account_operation">
-            <column name="status" type="SMALLINT"/>
             <column name="transfer_id" type="BIGINT"/>
         </addColumn>
     </changeSet>
