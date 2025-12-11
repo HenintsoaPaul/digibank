@@ -9,4 +9,36 @@
     [loadingOperations]="loadingOperations"
     [operations]="operations"
   />
+
+  <!-- Operation dialog -->
+  <div class="card flex justify-center">
+    <p-button
+      (click)="toggleDialogVisibility()"
+      label="{{dialogBtnText}}"
+      icon="pi pi-plus"
+    />
+
+    <p-dialog
+      header="{{dialogTitle}}"
+      [modal]="true"
+      [(visible)]="dialogVisible"
+      class="dialog"
+    >
+      <!-- Content -->
+      <div class="flex items-center gap-4 mb-4">
+        <label for="amount" class="font-semibold w-24">Amount</label>
+        <input pInputText id="amount" type="number" min="1"/>
+      </div>
+      <div class="flex items-center gap-4 mb-8">
+        <label for="type" class="font-semibold w-24">Type</label>
+        <input pInputText id="type"/>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex justify-end gap-2">
+        <p-button label="Cancel" severity="secondary" (click)="toggleDialogVisibility()"/>
+        <p-button label="Submit" (click)="submitDialog()"/>
+      </div>
+    </p-dialog>
+  </div>
 </div>

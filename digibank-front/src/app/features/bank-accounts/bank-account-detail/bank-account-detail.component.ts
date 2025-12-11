@@ -6,6 +6,9 @@ import {TableModule} from 'primeng/table';
 import {Operation} from '../../operations/models/operation.model';
 import {OperationService} from '../../operations/services/operation.service';
 import {OperationList} from '../../operations/operation-list/operation-list';
+import {Button} from 'primeng/button';
+import {Dialog} from 'primeng/dialog';
+import {InputText} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-bank-account-detail',
@@ -13,6 +16,9 @@ import {OperationList} from '../../operations/operation-list/operation-list';
     ReactiveFormsModule,
     TableModule,
     OperationList,
+    Button,
+    Dialog,
+    InputText,
   ],
   templateUrl: './bank-account-detail.component.html',
 })
@@ -43,5 +49,19 @@ export class BankAccountDetailComponent implements OnInit {
         this.loadingOperations = false;
       }
     });
+  }
+
+  // -- DIALOG --
+
+  dialogBtnText = "Add operation";
+  dialogTitle = "Add operation";
+  dialogVisible = false;
+
+  toggleDialogVisibility() {
+    this.dialogVisible = !this.dialogVisible;
+  }
+
+  submitDialog() {
+    console.log("Not implemented...");
   }
 }
