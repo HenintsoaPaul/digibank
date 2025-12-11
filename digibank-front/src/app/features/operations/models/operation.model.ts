@@ -1,6 +1,6 @@
 export interface Operation {
   id: number;
-  date?: Date;
+  dateStr: Date;
   amount: number;
   type: "debit" | "credit";
   description: string;

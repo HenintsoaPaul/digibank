@@ -5,14 +5,23 @@ import com.tsoa.digibank.data.dtos.bankaccount.*;
 import com.tsoa.digibank.data.dtos.operation.*;
 import com.tsoa.digibank.data.models.*;
 import com.tsoa.digibank.data.models.bankaccount.*;
+import com.tsoa.digibank.util.DateUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 /**
  * Swap from entities to DTOs (vice versa).
  */
 @Service
 public class AppMapper {
+    private final DateUtil dateUtil;
+
+    public AppMapper(DateUtil dateUtil) {
+        this.dateUtil = dateUtil;
+    }
+
     // --- Customer Mappings ---
     public CustomerDTO fromCustomer(Customer customer) {
         CustomerDTO customerDTO = new CustomerDTO();
@@ -48,6 +57,10 @@ public class AppMapper {
     public AccountOperationDTO fromAccountOperation(AccountOperation accountOperation) {
         AccountOperationDTO accountOperationDTO = new AccountOperationDTO();
         BeanUtils.copyProperties(accountOperation, accountOperationDTO);
+
+        LocalDateTime date = dateUtil.utilDateToLocalDateTime(accountOperation.getOperationDate());
+        accountOperationDTO.setDateStr(date);
+
         return accountOperationDTO;
     }
 }
