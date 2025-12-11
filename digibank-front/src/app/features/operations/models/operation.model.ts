@@ -1,7 +1,8 @@
 export interface Operation {
   id: number;
-  date?: Date;
+  dateStr: Date;
   amount: number;
   type: "debit" | "credit";
+  status: "pending" | "validated";
   description: string;
 }
