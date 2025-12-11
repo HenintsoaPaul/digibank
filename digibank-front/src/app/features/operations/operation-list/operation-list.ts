@@ -4,12 +4,14 @@ import {TableModule} from 'primeng/table';
 import {Operation} from '../models/operation.model';
 import {DateUtil} from '../../../utils/DateUtil';
 import {NumberUtil} from '../../../utils/NumberUtil';
+import {DateFormatPipe} from '../../../pipes/date-format.pipe';
 
 @Component({
   selector: 'app-operation-list',
   imports: [
     Skeleton,
     TableModule,
+    DateFormatPipe
   ],
   templateUrl: './operation-list.html',
 })

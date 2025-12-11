@@ -43,7 +43,7 @@
             <td>{{ operation.id }}</td>
             <td>{{ formatAmount(operation.amount) }}</td>
             <td>{{ operation.type }}</td>
-            <td>{{ formatDate(operation.dateStr) }}</td>
+            <td>{{ operation.dateStr | dateFormat }}</td>
             <td>{{ operation.description }}</td>
             <!--          <td>-->
             <!--            <p-button-->
