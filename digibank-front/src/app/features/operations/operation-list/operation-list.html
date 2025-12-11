@@ -41,7 +41,7 @@
         <ng-template pTemplate="body" let-operation>
           <tr>
             <td>{{ operation.id }}</td>
-            <td>{{ formatAmount(operation.amount) }}</td>
+            <td>{{ operation.amount | numberFormat }}</td>
             <td>{{ operation.type }}</td>
             <td>{{ operation.dateStr | dateFormat }}</td>
             <td>{{ operation.description }}</td>
