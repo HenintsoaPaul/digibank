@@ -18,23 +18,23 @@
       >
         <ng-template pTemplate="header">
           <tr>
-            <th>
+            <th pSortableColumn="id">
+              <p-sortIcon field="id"/>
               Id
             </th>
             <th pSortableColumn="amount">
               <p-sortIcon field="amount"/>
               Amount
             </th>
-            <th pSortableColumn="type">
-              <p-sortIcon field="type"/>
+            <th>
               Type
+            </th>
+            <th>
+              Status
             </th>
             <th pSortableColumn="operationDate">
               <p-sortIcon field="operationDate"/>
               Date
-            </th>
-            <th>
-              Description
             </th>
           </tr>
         </ng-template>
@@ -43,8 +43,8 @@
             <td>{{ operation.id }}</td>
             <td>{{ operation.amount | numberFormat }}</td>
             <td>{{ operation.type }}</td>
+            <td>{{ operation.status }}</td>
             <td>{{ operation.dateStr | dateFormat }}</td>
-            <td>{{ operation.description }}</td>
             <!--          <td>-->
             <!--            <p-button-->
             <!--              icon="pi pi-eye"-->
