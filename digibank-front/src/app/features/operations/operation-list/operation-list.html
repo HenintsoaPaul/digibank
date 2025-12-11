@@ -1,5 +1,5 @@
 <div class="layout-card">
-  <h3>Bank accounts</h3>
+  <h3>Operations</h3>
   @if (loadingOperations()) {
     <!-- Show Skeleton while loading -->
     <div>
@@ -21,17 +21,17 @@
             <th>
               Id
             </th>
-            <th pSortableColumn="operationDate">
-              <p-sortIcon field="operationDate"/>
-              Date
+            <th pSortableColumn="amount">
+              <p-sortIcon field="amount"/>
+              Amount
             </th>
             <th pSortableColumn="type">
               <p-sortIcon field="type"/>
               Type
             </th>
-            <th pSortableColumn="amount">
-              <p-sortIcon field="amount"/>
-              Amount
+            <th pSortableColumn="operationDate">
+              <p-sortIcon field="operationDate"/>
+              Date
             </th>
             <th>
               Description
@@ -41,9 +41,9 @@
         <ng-template pTemplate="body" let-operation>
           <tr>
             <td>{{ operation.id }}</td>
-            <td>{{ operation.date }}</td>
-            <td>{{ operation.type }}</td>
             <td>{{ operation.amount }}</td>
+            <td>{{ operation.type }}</td>
+            <td>{{ formatDate(operation.dateStr) }}</td>
             <td>{{ operation.description }}</td>
             <!--          <td>-->
             <!--            <p-button-->

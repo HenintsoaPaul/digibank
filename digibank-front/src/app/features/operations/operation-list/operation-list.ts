@@ -1,7 +1,8 @@
-import {Component, input} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {Skeleton} from 'primeng/skeleton';
 import {TableModule} from 'primeng/table';
 import {Operation} from '../models/operation.model';
+import {DateUtil} from '../../../utils/DateUtil';
 
 @Component({
   selector: 'app-operation-list',
@@ -14,4 +15,10 @@ import {Operation} from '../models/operation.model';
 export class OperationList {
   loadingOperations = input.required<boolean>();
   operations = input.required<Operation[]>();
+
+  private dateUtil = inject(DateUtil);
+
+  formatDate(dateStr: string) {
+    return this.dateUtil.format(dateStr);
+  }
 }

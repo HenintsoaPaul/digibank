@@ -6,6 +6,7 @@ import Aura from '@primeuix/themes/aura';
 import { routes } from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {DatePipe} from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +19,7 @@ export const appConfig: ApplicationConfig = {
         options: { darkModeSelector: '.p-dark' },
       },
     }),
-    provideHttpClient()
+    provideHttpClient(),
+    DatePipe
   ]
 };
