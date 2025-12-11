@@ -24,21 +24,48 @@
       [(visible)]="dialogVisible"
       class="dialog"
     >
-      <!-- Content -->
-      <div class="flex items-center gap-4 mb-4">
-        <label for="amount" class="font-semibold w-24">Amount</label>
-        <input pInputText id="amount" type="number" min="1"/>
-      </div>
-      <div class="flex items-center gap-4 mb-8">
-        <label for="type" class="font-semibold w-24">Type</label>
-        <input pInputText id="type"/>
-      </div>
+      <form [formGroup]="operationForm"
+            (ngSubmit)="submitDialog()"
+      >
+        <!-- Content -->
+        <div>
+          <label for="amount">Amount</label>
+          <input pInputText
+                 id="amount"
+                 formControlName="amount"
+                 type="number"
+                 min="1"/>
+          @if (isInvalid("amount")) {
+            <div style="color: red;">
+              Please provide a valid amount.
+            </div>
+          }
+        </div>
 
-      <!-- Controls -->
-      <div class="flex justify-end gap-2">
-        <p-button label="Cancel" severity="secondary" (click)="toggleDialogVisibility()"/>
-        <p-button label="Submit" (click)="submitDialog()"/>
-      </div>
+        <div>
+          <label for="type">Type</label>
+          <input pInputText
+                 id="type"
+                 formControlName="type"
+                 type="text"/>
+          @if (isInvalid("type")) {
+            <div style="color: red;">
+              Please choose a valid type.
+            </div>
+          }
+        </div>
+
+        <!-- Controls -->
+        <div class="flex justify-end gap-2">
+          <p-button label="Cancel"
+                    severity="secondary"
+                    (click)="toggleDialogVisibility()"/>
+          <p-button label="Submit"
+                    type="submit"
+                    (click)="submitDialog()"
+                    [disabled]="operationForm.invalid"/>
+        </div>
+      </form>
     </p-dialog>
   </div>
 </div>

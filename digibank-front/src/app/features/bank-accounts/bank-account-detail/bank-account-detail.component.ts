@@ -1,7 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {BankAccount} from "../../bank-accounts/models/bank-account.model";
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {TableModule} from 'primeng/table';
 import {Operation} from '../../operations/models/operation.model';
 import {OperationService} from '../../operations/services/operation.service';
@@ -31,11 +31,21 @@ export class BankAccountDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private operationService = inject(OperationService);
 
+  private fb = inject(FormBuilder);
+  operationForm!: FormGroup;
+
   ngOnInit() {
+    // Fetch then set data
     this.route.data.subscribe((data) => {
       this.bankAccount = data['account'] as BankAccount;
       this._fetchCustomerAccounts(this.bankAccount.id);
     })
+
+    // Setup operation dialog form
+    this.operationForm = this.fb.group({
+      amount: ['500', [Validators.required]],
+      type: ['', [Validators.required]]
+    });
   }
 
   private _fetchCustomerAccounts(accountId: string) {
@@ -62,6 +72,15 @@ export class BankAccountDetailComponent implements OnInit {
   }
 
   submitDialog() {
-    console.log("Not implemented...");
+    console.log('Form values: ', this.operationForm.value);
+  }
+
+  isInvalid(field: string): boolean | undefined {
+    const isInvalid = this.operationForm.get(field)?.invalid
+      && (
+        this.operationForm.get(field)?.dirty
+        || this.operationForm.get(field)?.touched
+      );
+    return isInvalid; // if 'isInvalid' is undefined then return 'true'
   }
 }
