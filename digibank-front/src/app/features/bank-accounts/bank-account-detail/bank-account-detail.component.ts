@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {BankAccount} from "../../bank-accounts/models/bank-account.model";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {TableModule} from 'primeng/table';
-import {Operation} from '../../operations/models/operation.model';
+import {Operation, OperationReq, OperationType} from '../../operations/models/operation.model';
 import {OperationService} from '../../operations/services/operation.service';
 import {OperationList} from '../../operations/operation-list/operation-list';
 import {Button} from 'primeng/button';
@@ -33,6 +33,7 @@ export class BankAccountDetailComponent implements OnInit {
 
   private fb = inject(FormBuilder);
   operationForm!: FormGroup;
+  operationTypeList!: OperationType[];
 
   ngOnInit() {
     // Fetch then set data
@@ -47,6 +48,8 @@ export class BankAccountDetailComponent implements OnInit {
       type: ['', [Validators.required]],
       description: [''],
     });
+
+    this.operationTypeList = Object.values(OperationType);
   }
 
   private _fetchCustomerAccounts(accountId: string) {
@@ -73,7 +76,20 @@ export class BankAccountDetailComponent implements OnInit {
   }
 
   submitDialog() {
-    console.log('Form values: ', this.operationForm.value);
+    // Prepare request
+    const operationReq = new OperationReq(
+      this.getFieldValue("amount") as number,
+      this.getFieldValue("type") as OperationType,
+      this.getFieldValue("description"),
+    );
+    console.log(operationReq)
+
+    // Send to API
+    // ...
+  }
+
+  getFieldValue(field: string): any {
+    return this.operationForm.get(field)!.value!;
   }
 
   isInvalid(field: string): boolean | undefined {
@@ -82,6 +98,6 @@ export class BankAccountDetailComponent implements OnInit {
         this.operationForm.get(field)?.dirty
         || this.operationForm.get(field)?.touched
       );
-    return isInvalid; // if 'isInvalid' is undefined then return 'true'
+    return isInvalid;
   }
 }

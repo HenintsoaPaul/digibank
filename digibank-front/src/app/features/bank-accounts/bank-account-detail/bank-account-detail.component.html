@@ -44,10 +44,14 @@
 
         <div>
           <label for="type">Type</label>
-          <input pInputText
-                 id="type"
-                 formControlName="type"
-                 type="text"/>
+          <select id="type"
+                  formControlName="type">
+            @for (operationType of operationTypeList; track operationType) {
+              <option [value]="operationType">
+                {{ operationType }}
+              </option>
+            }
+          </select>
           @if (isInvalid("type")) {
             <div style="color: red;">
               Please choose a valid type.
@@ -70,7 +74,6 @@
                     (click)="toggleDialogVisibility()"/>
           <p-button label="Submit"
                     type="submit"
-                    (click)="submitDialog()"
                     [disabled]="operationForm.invalid"/>
         </div>
       </form>
