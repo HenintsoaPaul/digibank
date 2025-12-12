@@ -44,7 +44,8 @@ export class BankAccountDetailComponent implements OnInit {
     // Setup operation dialog form
     this.operationForm = this.fb.group({
       amount: ['500', [Validators.required]],
-      type: ['', [Validators.required]]
+      type: ['', [Validators.required]],
+      description: [''],
     });
   }
 
