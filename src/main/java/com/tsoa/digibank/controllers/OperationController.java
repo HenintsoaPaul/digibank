@@ -5,12 +5,13 @@ import com.tsoa.digibank.exceptions.*;
 import com.tsoa.digibank.services.operation.OperationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/accounts")
+@RequestMapping("/operations")
 public class OperationController {
     private OperationService operationService;
 
@@ -31,5 +32,15 @@ public class OperationController {
         operationService.transfer(transferRequestDTO.getAccountSource(),
                 transferRequestDTO.getAccountDestination(),
                 transferRequestDTO.getAmount());
+    }
+
+    @PostMapping
+    public ResponseEntity create(@RequestBody AccountOperationReq operationReq)  {
+        int code = operationService.create(operationReq);
+        if (code == 1) {
+            return ResponseEntity.ok(operationReq);
+        } else {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }
