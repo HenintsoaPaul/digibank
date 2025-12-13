@@ -1,6 +1,7 @@
 package com.tsoa.digibank.services.operation;
 
 import com.tsoa.digibank.data.dtos.operation.AccountOperationDTO;
+import com.tsoa.digibank.data.dtos.operation.AccountOperationReq;
 import com.tsoa.digibank.data.enums.OperationStatus;
 import com.tsoa.digibank.data.enums.OperationType;
 import com.tsoa.digibank.data.models.AccountOperation;
@@ -140,6 +141,21 @@ public class OperationServiceImpl implements OperationService {
         return accountOperations.stream()
                 .map(op -> dtoMapper.fromAccountOperation(op))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public int create(AccountOperationReq operationReq) {
+        if (operationReq.getAmount() == 500)
+            return 1;
+        else
+            return 0;
+
+        // Verifications
+        // 1- amount
+        // 2- type
+        // 3- sanitize desc
+
+        // Map to AccountOperation
     }
 
 //    @Override
