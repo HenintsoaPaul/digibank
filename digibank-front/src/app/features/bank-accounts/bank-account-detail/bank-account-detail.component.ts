@@ -85,6 +85,9 @@ export class BankAccountDetailComponent implements OnInit {
     console.log(operationReq)
 
     // Send to API
+    const response$ = this.operationService.create(operationReq);
+
+    // Show response in modal pop
     // ...
   }
 
