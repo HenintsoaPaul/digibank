@@ -2,6 +2,9 @@ package com.tsoa.digibank.controllers;
 
 import com.tsoa.digibank.data.dtos.operation.*;
 import com.tsoa.digibank.exceptions.*;
+import com.tsoa.digibank.responses.ApiBadResponse;
+import com.tsoa.digibank.responses.ApiOkResponse;
+import com.tsoa.digibank.responses.ApiResponse;
 import com.tsoa.digibank.services.operation.OperationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,26 +19,43 @@ public class OperationController {
     private OperationService operationService;
 
     @PostMapping("/debit")
-    public DebitDTO debit(@RequestBody DebitDTO debitDTO) throws BankAccountNotFoundException, BalanceNotSufficientException, NegativeAmountException {
-        operationService.debit(debitDTO.getAccountId(), debitDTO.getAmount(), debitDTO.getDescription());
-        return debitDTO;
+    public ApiResponse<DebitDTO> debit(@RequestBody DebitDTO debitDTO) {
+        String accountId = debitDTO.getAccountId();
+        try {
+            operationService.debit(accountId, debitDTO.getAmount(), debitDTO.getDescription());
+            String msg = "Account " + accountId + " debited successfully";
+            return new ApiOkResponse<>(msg, debitDTO);
+        } catch (BankAccountNotFoundException | BalanceNotSufficientException | NegativeAmountException e) {
+            return new ApiBadResponse<>(e.getMessage(), debitDTO);
+        }
     }
 
     @PostMapping("/credit")
-    public CreditDTO credit(@RequestBody CreditDTO creditDTO) throws BankAccountNotFoundException, NegativeAmountException {
-        operationService.credit(creditDTO.getAccountId(), creditDTO.getAmount(), creditDTO.getDescription());
-        return creditDTO;
+    public ApiResponse<CreditDTO> credit(@RequestBody CreditDTO creditDTO) {
+        String accountId = creditDTO.getAccountId();
+        try {
+            operationService.credit(accountId, creditDTO.getAmount(), creditDTO.getDescription());
+            String msg = "Account " + accountId + " credited successfully";
+            return new ApiOkResponse<>(msg, creditDTO);
+        } catch (BankAccountNotFoundException | NegativeAmountException e) {
+            return new ApiBadResponse<>(e.getMessage(), creditDTO);
+        }
     }
 
     @PostMapping("/transfer")
-    public void transfer(@RequestBody TransferRequestDTO transferRequestDTO) throws BankAccountNotFoundException, BalanceNotSufficientException, NegativeAmountException {
-        operationService.transfer(transferRequestDTO.getAccountSource(),
-                transferRequestDTO.getAccountDestination(),
-                transferRequestDTO.getAmount());
+    public ApiResponse<TransferRequestDTO> transfer(@RequestBody TransferRequestDTO transferRequestDTO) {
+        try {
+            operationService.transfer(transferRequestDTO.getAccountSource(),
+                    transferRequestDTO.getAccountDestination(),
+                    transferRequestDTO.getAmount());
+            return new ApiOkResponse<>("Transfer created successfully.", transferRequestDTO);
+        } catch (BankAccountNotFoundException | BalanceNotSufficientException | NegativeAmountException e) {
+            return new ApiBadResponse<>(e.getMessage(), transferRequestDTO);
+        }
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody AccountOperationReq operationReq)  {
+    public ResponseEntity create(@RequestBody AccountOperationReq operationReq) {
         int code = operationService.create(operationReq);
         if (code == 1) {
             return ResponseEntity.ok(operationReq);
