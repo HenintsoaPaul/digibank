@@ -27,8 +27,9 @@ public enum OperationType {
 
     public static OperationType fromLabel(String label) {
         if (label == null || label.isEmpty()) return null;
+        String lbl = label.toLowerCase();
         return Arrays.stream(OperationType.values())
-                .filter(type -> type.label == label)
+                .filter(type -> type.label == lbl)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Unknown operationType label: " + label));
     }

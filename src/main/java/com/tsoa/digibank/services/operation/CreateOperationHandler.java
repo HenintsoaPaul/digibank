@@ -17,10 +17,10 @@ public class CreateOperationHandler {
 
     public AccountOperationCreatedEvent handle(CreateOperationCommand command) throws IllegalArgumentException {
         // 1. Validate business rules
-        validate(command);
+        OperationType type = validate(command);
 
         // 2. Map to entity
-        AccountOperation operation = mapToEntity(command);
+        AccountOperation operation = mapToEntity(command, type);
 
         // 3. Persist
         repository.save(operation);
@@ -31,28 +31,28 @@ public class CreateOperationHandler {
         return event;
     }
 
-    private AccountOperation mapToEntity(CreateOperationCommand command) {
+    private AccountOperation mapToEntity(CreateOperationCommand command, OperationType type) {
         AccountOperation operation = new AccountOperation();
         operation.setAmount(command.getAmount());
-        operation.setType(OperationType.fromLabel(command.getType()));
+        operation.setType(type);
         operation.setDescription(command.getDescription());
         return operation;
     }
 
-    private void validate(CreateOperationCommand command) throws IllegalArgumentException {
+    private OperationType validate(CreateOperationCommand command) throws IllegalArgumentException {
         // Validate amount
         if (command.getAmount() <= 0) {
             throw new IllegalArgumentException("Amount must be positive");
         }
 
         // Validate type
-        if (!command.getType().equals("DEBIT") && !command.getType().equals("CREDIT")) {
-            throw new IllegalArgumentException("Invalid operation type");
-        }
+        OperationType type = OperationType.fromLabel(command.getType());
 
         // Sanitize description
         if (command.getDescription() == null || command.getDescription().trim().isEmpty()) {
             command.setDescription("No description provided");
         }
+
+        return type;
     }
 }
