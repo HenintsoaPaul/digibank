@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/operations")
 public class OperationController {
     private OperationService operationService;
+    private CreateOperationHandler createOperationHandler;
 
     @PostMapping("/debit")
     public ApiResponse<DebitDTO> debit(@RequestBody DebitDTO debitDTO) {
@@ -57,17 +58,13 @@ public class OperationController {
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody AccountOperationReq operationReq) {
-        int code = operationService.create(operationReq);
-        if (code == 1) {
-            return ResponseEntity.ok(operationReq);
-        } else {
-            return ResponseEntity.internalServerError().build();
     public ApiResponse<CreateOperationCommand> create(@RequestBody CreateOperationCommand command) {
         try {
             AccountOperationCreatedEvent event = createOperationHandler.handle(command);
+            log.info(event.getMessage());
             return new ApiOkResponse<>(event.getMessage(), command);
         } catch (IllegalArgumentException e) {
+            log.info(e.getMessage());
             return new ApiBadResponse<>(e.getMessage(), command);
         }
     }
