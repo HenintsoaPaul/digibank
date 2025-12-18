@@ -1,14 +1,16 @@
 package com.tsoa.digibank.controllers;
 
+import com.tsoa.digibank.data.commands.operations.CreateOperationCommand;
 import com.tsoa.digibank.data.dtos.operation.*;
+import com.tsoa.digibank.events.AccountOperationCreatedEvent;
 import com.tsoa.digibank.exceptions.*;
 import com.tsoa.digibank.responses.ApiBadResponse;
 import com.tsoa.digibank.responses.ApiOkResponse;
 import com.tsoa.digibank.responses.ApiResponse;
+import com.tsoa.digibank.services.operation.CreateOperationHandler;
 import com.tsoa.digibank.services.operation.OperationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -61,6 +63,12 @@ public class OperationController {
             return ResponseEntity.ok(operationReq);
         } else {
             return ResponseEntity.internalServerError().build();
+    public ApiResponse<CreateOperationCommand> create(@RequestBody CreateOperationCommand command) {
+        try {
+            AccountOperationCreatedEvent event = createOperationHandler.handle(command);
+            return new ApiOkResponse<>(event.getMessage(), command);
+        } catch (IllegalArgumentException e) {
+            return new ApiBadResponse<>(e.getMessage(), command);
         }
     }
 }
