@@ -5,18 +5,15 @@ import com.tsoa.digibank.data.enums.OperationType;
 import com.tsoa.digibank.data.models.AccountOperation;
 import com.tsoa.digibank.events.AccountOperationCreatedEvent;
 import com.tsoa.digibank.repositories.AccountOperationRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class CreateOperationHandler {
-    private final AccountOperationRepository repository;
-    private final ApplicationEventPublisher eventPublisher;
-
-    public CreateOperationHandler(AccountOperationRepository repository, ApplicationEventPublisher eventPublisher) {
-        this.repository = repository;
-        this.eventPublisher = eventPublisher;
-    }
+    private AccountOperationRepository repository;
+    private ApplicationEventPublisher eventPublisher;
 
     public AccountOperationCreatedEvent handle(CreateOperationCommand command) throws IllegalArgumentException {
         // 1. Validate business rules
