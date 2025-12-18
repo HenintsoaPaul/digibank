@@ -1,7 +1,7 @@
 package com.tsoa.digibank.services.operation;
 
 import com.tsoa.digibank.data.dtos.operation.AccountOperationDTO;
-import com.tsoa.digibank.data.dtos.operation.AccountOperationReq;
+import com.tsoa.digibank.data.commands.operations.CreateOperationCommand;
 import com.tsoa.digibank.data.models.AccountOperation;
 import com.tsoa.digibank.exceptions.operation.AccountOperationAlreadyValidatedException;
 import com.tsoa.digibank.exceptions.operation.AccountOperationNotFoundException;
@@ -27,8 +27,6 @@ public interface OperationService {
     void validateTransfer(Long transferId) throws TransferOperationAlreadyValidatedException, TransferOperationNotFoundException, AccountOperationNotFoundException, AccountOperationAlreadyValidatedException;
 
     List<AccountOperationDTO> accountHistory(String accountId);
-
-    int create(AccountOperationReq operationReq);
 
 //    AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException;
 }
