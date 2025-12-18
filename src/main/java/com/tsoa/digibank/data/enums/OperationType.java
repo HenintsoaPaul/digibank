@@ -24,4 +24,12 @@ public enum OperationType {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Unknown operationType code: " + code));
     }
+
+    public static OperationType fromLabel(String label) {
+        if (label == null || label.isEmpty()) return null;
+        return Arrays.stream(OperationType.values())
+                .filter(type -> type.label == label)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Unknown operationType label: " + label));
+    }
 }
