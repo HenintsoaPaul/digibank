@@ -1,4 +1,4 @@
-import {Component, inject, input, OnInit, output} from '@angular/core';
+import {Component, inject, OnInit, output} from '@angular/core';
 import {Dialog} from 'primeng/dialog';
 import {OperationReq, OperationType} from '../models/operation.model';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -13,17 +13,16 @@ import {OperationService} from '../services/operation.service';
     Button
   ],
   templateUrl: './operation-form.html',
-  styleUrl: './operation-form.scss',
 })
 export class OperationForm implements OnInit {
-  isVisible  = input.required<boolean>();
+  dialogTitle = "Add operation";
+  isVisible  = true;
   closeDialog  = output<boolean>();
 
   close() {
+    this.isVisible = false;
     this.closeDialog.emit(true);
   }
-
-  dialogTitle = "Add operation";
 
   private operationService = inject(OperationService);
   private fb = inject(FormBuilder);
