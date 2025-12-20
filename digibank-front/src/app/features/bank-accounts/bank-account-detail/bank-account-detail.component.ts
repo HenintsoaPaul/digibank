@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {BankAccount} from "../../bank-accounts/models/bank-account.model";
 import {ReactiveFormsModule} from '@angular/forms';
@@ -53,13 +53,13 @@ export class BankAccountDetailComponent implements OnInit {
   // -- DIALOG --
 
   dialogBtnText = "Add operation";
-  dialogVisible = false;
+  dialogVisible = signal(false);
 
   showDialog() {
-    this.dialogVisible = true;
+    this.dialogVisible.set(true);
   }
 
   onCloseDialog(_: boolean) {
-    this.dialogVisible = false;
+    this.dialogVisible.set(false);
   }
 }
